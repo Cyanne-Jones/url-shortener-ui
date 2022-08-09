@@ -21,6 +21,10 @@ export class App extends Component {
 
   addUrl = (newUrl) => {
     this.setState({error: ""})
+    if (!newUrl.title || !newUrl.long_url) {
+      this.setState({error: "Failed to input all fields, try again" })
+      return
+    }
     fetch("http://localhost:3001/api/v1/urls", {
       method: "POST",
       body: JSON.stringify(newUrl),
