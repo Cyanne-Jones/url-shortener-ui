@@ -15,4 +15,15 @@ describe('Url Shortener', () => {
     cy.contains("a", "http://localhost:3001/useshorturl/1");
   });
 
+  it("Should show a form", () => {
+    cy.contains("form")
+    cy.get('input').first().should("have.class", "title-input")
+    cy.get('input').eq(1).should("have.class", "url-input")
+  });
+
+  it("Should let a user type into the form", () => {
+    cy.get(".title-input").type("Cool Url").should("have.value", "Cool Url");
+    cy.get(".url-input").type("google.com").should("have.value", "google.com");
+  });
+  
 });
