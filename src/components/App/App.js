@@ -19,6 +19,19 @@ export class App extends Component {
       .catch(error => this.setState({error: error.message}))
   }
 
+  addUrl = (newUrl) => {
+    fetch("http://localhost:3001/api/v1/urls", {
+      method: "POST",
+      body: JSON.stringify(newUrl),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+    .then(res =>  this.setState({urls: [...this.state.urls, res]}))
+    .catch(error => this.setState({error: error.message}))
+  }
+
   render() {
     return (
       <main className="App">
