@@ -5,7 +5,7 @@ describe('Url Shortener', () => {
     cy.intercept("GET", "http://localhost:3001/api/v1/urls", {
       statusCode: 201,
       fixture: "getUrls.json"
-    })
+    });
     cy.visit('http://localhost:3000');
   });
   
@@ -25,5 +25,17 @@ describe('Url Shortener', () => {
     cy.get(".title-input").type("Cool Url").should("have.value", "Cool Url");
     cy.get(".url-input").type("google.com").should("have.value", "google.com");
   });
-  
+
+  it("should let a user input a url they want shortened, and display it", () => {
+    cy.intercept("POST", "http://localhost:3001/api/v1/urls", {
+      statusCode: 201,
+      fixture: "postedUrl.json"
+    });
+    cy.get(".title-input").type("Rippin' Elder Scrolls Soundtrack");
+    cy.get(".url-input").type("https://www.youtube.com/watch?v=zBCI-JVe21Q&t=1284s&ab_channel=AmbientWorlds");
+    cy.get("button").click();
+    cy.contains("h3", "Rippin' Elder Scrolls Soundtrack");
+    cy.contains("p", "https://www.youtube.com/watch?v=zBCI-JVe21Q&t=1284s&ab_channel=AmbientWorlds");
+    cy.contains("a", "http://localhost:3001/useshorturl/2");
+  });
 });
