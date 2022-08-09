@@ -16,7 +16,7 @@ export class App extends Component {
   componentDidMount() {
     getUrls()
       .then(res => this.setState({urls: res.urls}))
-      .catch(error => this.setState({error: error.message}))
+      .catch(error => this.setState({error: "Oh no! An error occurred!"}))
   }
 
   addUrl = (newUrl) => {

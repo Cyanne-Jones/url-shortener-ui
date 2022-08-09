@@ -38,4 +38,14 @@ describe('Url Shortener', () => {
     cy.contains("p", "https://www.youtube.com/watch?v=zBCI-JVe21Q&t=1284s&ab_channel=AmbientWorlds");
     cy.contains("a", "http://localhost:3001/useshorturl/2");
   });
+
+  it("Should show an error message if the server has failed", () => {
+
+    cy.intercept("GET", "http://localhost:3001/api/v1/urls", {
+      statusCode: 404
+    });
+    cy.visit("http://localhost:3000")
+    cy.contains("Oh no! An error occurred!")
+  });
+
 });
