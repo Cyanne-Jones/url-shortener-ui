@@ -48,4 +48,13 @@ describe('Url Shortener', () => {
     cy.contains("Oh no! An error occurred!")
   });
 
+  it("Shouldn't let a user submit an incomplete form", () => {
+    cy.intercept("POST", "http://localhost:3001/api/v1/urls", {
+      statusCode: 422,
+    });
+    cy.visit("http://localhost:3000")
+    cy.get(".title-input").type("Rippin' Elder Scrolls Soundtrack");
+    cy.get("button").click();
+    cy.contains("Failed to input all fields, try again")
+  });
 });

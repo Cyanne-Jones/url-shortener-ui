@@ -16,10 +16,11 @@ export class App extends Component {
   componentDidMount() {
     getUrls()
       .then(res => this.setState({urls: res.urls}))
-      .catch(error => this.setState({error: "Oh no! An error occurred!"}))
-  }
+      .catch(error => this.setState({error: "Oh no! An error occurred!"}));
+  };
 
   addUrl = (newUrl) => {
+    this.setState({error: ""})
     fetch("http://localhost:3001/api/v1/urls", {
       method: "POST",
       body: JSON.stringify(newUrl),
@@ -29,7 +30,7 @@ export class App extends Component {
     })
     .then(res => res.json())
     .then(res =>  this.setState({urls: [...this.state.urls, res]}))
-    .catch(error => this.setState({error: error.message}))
+    .catch(error => this.setState({error: "Failed to input all fields, try again"}))
   }
 
   render() {
